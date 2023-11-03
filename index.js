@@ -20,6 +20,8 @@ const getMovies = async (url) => {
 let movies = await getMovies(URL);
 console.log(movies);
 
+filteredArrOfMovies = movies;
+
 const createElement = (element) => document.createElement(element);
 
 // function to create movie cards
@@ -101,7 +103,7 @@ function getFilteredData() {
     searchValue?.length > 0
       ? movies.filter(
           (movie) =>
-            searchValue === movie.name.toLowerCase() ||
+            movie.name.toLowerCase().includes(searchValue) ||
             searchValue === movie.director_name.toLowerCase() ||
             movie.writter_name.toLowerCase().split(",").includes(searchValue) ||
             movie.cast_name.toLowerCase().split(",").includes(searchValue)
@@ -183,7 +185,7 @@ function handleGenreSelect(event) {
   genre = event.target.value;
   const filteredMoviesByGenre = getFilteredData();
   parentElement.innerHTML = "";
-  createMovieCard(genre ? filteredMoviesByGenre : movies);
+  createMovieCard(genre ? filteredMoviesByGenre : filteredArrOfMovies);
 }
 
 movieGenres.addEventListener("change", handleGenreSelect);
